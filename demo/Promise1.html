@@ -45,9 +45,18 @@
                 reject(reason);
             }
         })
-    }).then((val)=>{
+    })
+    p.then((val)=>{
         let user = val;
-        console.log('then函数中传入的 成功函数 执行');
+        console.log('第1次调用then后');
+        console.log('then函数中传入的 成功态函数 执行');
+        console.log('用户信息:',user);
+    });
+
+    p.then((val)=>{
+        let user = val;
+        console.log('第2次调用then后');
+        console.log('then函数中传入的 成功态函数 执行');
         console.log('用户信息:',user);
     });
 </script>

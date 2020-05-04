@@ -98,4 +98,14 @@ p.then(function (value) {
 
 代码示例：`Promise1.html`：[点击查看源码](./demo/Promise1.html)
 
+#### 1.3 then的链式调用
+
+代码示例：`Promise2.html`：[点击查看源码](./demo/Promise2.html)
+
+### 用Promise封装ajax
+代码示例：`Promise3.html`：[点击查看源码](./demo/Promise3.html)
+
+### race方法和all方法
+代码示例：`Promise4.html`：[点击查看源码](./demo/Promise4.html)
+
 ## Promise简单实现
