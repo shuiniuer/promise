@@ -28,65 +28,27 @@
     <div>
         <h2>Promise使用（1）</h2>
         <ul>
-            <li>第1步：通过接口 <a href="http://rap2.taobao.org:38080/app/mock/252985/userInfo">http://rap2.taobao.org:38080/app/mock/252985/userInfo</a> 获取用户信息（包括用户id）<br/></li>
-            <li>第2步：根据获取的用户id通过接口<a href="http://rap2.taobao.org:38080/app/mock/252985/bill">http://rap2.taobao.org:38080/app/mock/252985/bill</a>  获取用户账单（通过userId传参）<br/></li>
+            <li>通过接口 <a href="http://rap2.taobao.org:38080/app/mock/252985/userInfo">http://rap2.taobao.org:38080/app/mock/252985/userInfo</a> 获取用户信息<br/></li>
         </ul>
     </div>
 </body>
 <script>
-    let p1 = new Promise((resolve,reject)=>{
+    let p = new Promise((resolve,reject)=>{
+        console.log('构造函数中传入的 函数 执行');
         ajax({
             url: 'http://rap2.taobao.org:38080/app/mock/252985/userInfo',
             success: function(data){
+                console.log('resolve 函数 执行');
                 resolve(data)
             },
             fail: function(reason){
                 reject(reason);
             }
         })
-    });
-    
-    p1.then((val)=>{
-        let user = val;
-        console.log('用户信息:',user);
-
-        let p2 = new Promise((resolve,reject)=>{
-            ajax({
-                url: 'http://rap2.taobao.org:38080/app/mock/252985/bill?userId='+user.id,
-                success: function(data2){
-                    resolve(data2)
-                },
-                fail: function(reason){
-                    reject(reason);
-                }
-            });
-        });
-
-        // 不写可以么？
-        p.then((val)=>{
-            console.log('p2-then-ok-cb',val);
-        });
-
-        // 这样写会有什么样的结果？
-        // let p2 = new Promise((resolve,reject)=>{
-        //     ajax({
-        //         url: 'http://rap2.taobao.org:38080/app/mock/252985/bill?userId='+user.id,
-        //         success: function(data2){
-        //             resolve(data2)
-        //         },
-        //         fail: function(reason){
-        //             reject(reason);
-        //         }
-        //     });
-        // }).then((val)=>{
-        //     console.log('p2-then-ok-cb',val);
-        // });
-
-        return p2;
-
     }).then((val)=>{
-        let bill = val;
-        console.log('账单信息:',bill);
+        let user = val;
+        console.log('then函数中传入的 成功函数 执行');
+        console.log('用户信息:',user);
     });
 </script>
 

@@ -27,16 +27,9 @@
 <body>
     <div>
         <h2>Promise使用（3）</h2>
-        <p>
-            有3个接口：<br/>
-            手机：<a href="http://rap2.taobao.org:38080/app/mock/252985/mobilephone">http://rap2.taobao.org:38080/app/mock/252985/mobilephone</a><br/>
-            电脑：<a href="http://rap2.taobao.org:38080/app/mock/252985/computer">http://rap2.taobao.org:38080/app/mock/252985/computer</a><br/>
-            电视机：<a href="http://rap2.taobao.org:38080/app/mock/252985/TV">http://rap2.taobao.org:38080/app/mock/252985/TV</a>
-        </p>
-        实现：
         <ul>
-            <li>请求3个接口，只要有一个接口返回数据，就进行下一步操作</li>
-            <li>请求3个接口，等3个接口的数据都返回后，再做下一步操作</li>
+            <li>第1步：通过接口 <a href="http://rap2.taobao.org:38080/app/mock/252985/userInfo">http://rap2.taobao.org:38080/app/mock/252985/userInfo</a> 获取用户信息（包括用户id）<br/></li>
+            <li>第2步：根据获取的用户id通过接口<a href="http://rap2.taobao.org:38080/app/mock/252985/bill">http://rap2.taobao.org:38080/app/mock/252985/bill</a>  获取用户账单（通过userId传参）<br/></li>
         </ul>
     </div>
 </body>
@@ -57,26 +50,15 @@
         return p;
     };
 
-    // 请求3个接口，只要有一个接口返回数据，就进行下一步操作
-    Promise.race([
-        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/mobilephone'),
-        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/computer'),
-        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/TV')
-    ]).then((data)=>{
-        let product = data;
-        console.log('Promise.race',data);
+    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val)=>{
+        let user = val;
+        console.log('用户信息',user);
+        let p = p_ajax('http://rap2.taobao.org:38080/app/mock/252985/bill?userId='+user.id);
+        return p;
+    }).then((val)=>{
+        let bill = val;
+        console.log('用户账单',bill);
     });
-
-    // 请求3个接口，等3个接口的数据都返回后，再做下一步操作
-    Promise.all([
-        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/mobilephone'),
-        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/computer'),
-        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/TV')
-    ]).then(data=>{
-        let products = data;
-        console.log('Promise.all',products);
-    });
-
 </script>
 
 </html>
