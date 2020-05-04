@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Promise使用（3）</title>
+    <script>
+        function ajax(obj) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('get', obj.url, true);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let data = (JSON.parse(xhr.responseText));
+                    if(data.isOk === false){
+                        obj.fail ? obj.fail(data): null;
+                    }else{
+                        obj.success(data);
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <h2>Promise使用（3）</h2>
+        <p>
+            有3个接口：<br/>
+            手机：<a href="http://rap2.taobao.org:38080/app/mock/252985/mobilephone">http://rap2.taobao.org:38080/app/mock/252985/mobilephone</a><br/>
+            电脑：<a href="http://rap2.taobao.org:38080/app/mock/252985/computer">http://rap2.taobao.org:38080/app/mock/252985/computer</a><br/>
+            电视机：<a href="http://rap2.taobao.org:38080/app/mock/252985/TV">http://rap2.taobao.org:38080/app/mock/252985/TV</a>
+        </p>
+        实现：
+        <ul>
+            <li>请求3个接口，只要有一个接口返回数据，就进行下一步操作</li>
+            <li>请求3个接口，等3个接口的数据都返回后，再做下一步操作</li>
+        </ul>
+    </div>
+</body>
+<script>
+    let p_ajax = function(url){
+        let p = new Promise((resolve,reject)=>{
+            ajax({
+                url: url,
+                success(data){
+                    resolve(data);
+                },
+                fail(err){
+                    reject(err);
+                }
+            });
+        });
+
+        return p;
+    };
+
+    // 请求3个接口，只要有一个接口返回数据，就进行下一步操作
+    Promise.race([
+        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/mobilephone'),
+        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/computer'),
+        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/TV')
+    ]).then((data)=>{
+        let product = data;
+        console.log('Promise.race',data);
+    });
+
+    // 请求3个接口，等3个接口的数据都返回后，再做下一步操作
+    Promise.all([
+        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/mobilephone'),
+        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/computer'),
+        p_ajax('http://rap2.taobao.org:38080/app/mock/252985/TV')
+    ]).then(data=>{
+        let products = data;
+        console.log('Promise.all',products);
+    });
+
+</script>
+
+</html>

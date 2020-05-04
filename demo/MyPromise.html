@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Promise实现</title>
+    <script>
+        function ajax(obj) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('get', obj.url, true);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let data = (JSON.parse(xhr.responseText));
+                    if (data.isOk === false) {
+                        obj.fail ? obj.fail(data) : null;
+                    } else {
+                        obj.success(data);
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <h2>手动实现Promise</h2>
+        <ul>
+            <li>第1步：通过接口 <a
+                    href="http://rap2.taobao.org:38080/app/mock/252985/userInfo">http://rap2.taobao.org:38080/app/mock/252985/userInfo</a>
+                获取用户信息（包括用户id）<br /></li>
+            <li>第2步：根据获取的用户id通过接口<a
+                    href="http://rap2.taobao.org:38080/app/mock/252985/bill">http://rap2.taobao.org:38080/app/mock/252985/bill</a>
+                获取用户账单（通过userId传参）<br /></li>
+        </ul>
+    </div>
+</body>
+<script>
+    const PENDING = 'PENDING';
+    const RESOLVED = 'RESOLVED';
+    const REJECTED = 'REJECTED';
+    const resolvePromise = (x, resolve, reject) => {
+        if (!x) {
+            resolve(x);
+        } else {
+            let then = x.then;
+            if (typeof then === 'function') {
+                then.call(x, y => {
+                    resolve(y);
+                }, r => {
+                    reject(r);
+                })
+            } else {
+                resolve(x);
+            }
+        }
+    }
+
+    class MyPromise {
+        constructor(executor) {
+            this.status = PENDING;
+            this.value = undefined;
+            this.reason = undefined;
+
+            this.onFulfilledCallbacks = [];
+            this.onRejectedCallbacks = [];
+
+            const resolve = (val) => {
+                if (this.status === PENDING) {
+                    this.status = RESOLVED;
+                    this.value = val;
+                    this.onFulfilledCallbacks.forEach(fn => fn());
+                }
+            }
+            const reject = (reason) => {
+                if (this.status === PENDING) {
+                    this.status = REJECTED;
+                    this.reason = reason;
+                    this.onRejectedCallbacks.forEach(fn => fn());
+                }
+            }
+            executor(resolve, reject);
+        }
+
+        then(onFulfilled, onRejected) {
+            let promise2 = new MyPromise((resolve, reject) => {
+                if (this.status === RESOLVED) {
+                    let x = onFulfilled(this.value);
+                    resolvePromise(x, resolve, reject);
+                }
+
+                if (this.status === REJECTED) {
+                    let x = onRejected(this.reason);
+                    resolvePromise(x, resolve, reject);
+                }
+
+                if (this.status === PENDING) {
+                    this.onFulfilledCallbacks.push(() => {
+                        let x = onFulfilled(this.value);
+                        resolvePromise(x, resolve, reject);
+                    });
+                    this.onRejectedCallbacks.push(() => {
+                        let x = onRejected(this.reason);
+                        resolvePromise(x, resolve, reject);
+                    });
+                }
+            });
+            return promise2;
+        }
+    };
+
+    let p_ajax = function (url) {
+        let p = new MyPromise((resolve, reject) => {
+            ajax({
+                url: url,
+                success(data) {
+                    resolve(data);
+                },
+                fail(err) {
+                    reject(err);
+                }
+            });
+        });
+        return p;
+    };
+
+    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val) => {
+        let user = val;
+        console.log('用户信息', user);
+        let p = p_ajax('http://rap2.taobao.org:38080/app/mock/252985/bill?userId=' + user.id);
+        return p;
+    }).then((val) => {
+        let bill = val;
+        console.log('用户账单', bill);
+    });
+</script>
+
+</html>
