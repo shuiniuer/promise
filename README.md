@@ -71,7 +71,7 @@ rejected：代表操作失败
 
 - Promise有两种状态改变的方式，既可以从pending转变为fulfilled，也可以从pending转变为rejected。
 
-![状态转化关系](./status.png)
+![状态转化关系](./status.jpg)
 
 当状态发生变化，通过then函数绑定的相关状态的函数就会被调用。
 
