@@ -133,33 +133,6 @@ p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val)=>{
 
 代码示例：`Promise3.html`：[点击查看源码](./demo/Promise3.html)
 
-## 3. Promise.race方法和Promise.all方法
-
-```
-// 请求3个接口，只要有一个接口返回数据，就进行下一步操作
-Promise.race([
-    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/mobilephone'),
-    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/computer'),
-    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/TV')
-]).then((data)=>{
-    let product = data;
-    console.log('Promise.race',data);
-});
-
-// 请求3个接口，等3个接口的数据都返回后，再做下一步操作
-Promise.all([
-    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/mobilephone'),
-    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/computer'),
-    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/TV')
-]).then(data=>{
-    let products = data;
-    console.log('Promise.all',products);
-});
-
-```
-
-代码示例：`Promise4.html`：[点击查看源码](./demo/Promise4.html)
-
 # Promise简单实现
 
 ## 1. 不支持链式调用
@@ -331,6 +304,34 @@ class MyPromise {
 ```
 
 代码示例：`MyPromise.html`：[点击查看源码](./demo/MyPromise.html)
+
+
+# Promise其他方法：Promise.race、Promise.all等
+
+```
+// 请求3个接口，只要有一个接口返回数据，就进行下一步操作
+Promise.race([
+    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/mobilephone'),
+    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/computer'),
+    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/TV')
+]).then((data)=>{
+    let product = data;
+    console.log('Promise.race',data);
+});
+
+// 请求3个接口，等3个接口的数据都返回后，再做下一步操作
+Promise.all([
+    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/mobilephone'),
+    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/computer'),
+    p_ajax('http://rap2.taobao.org:38080/app/mock/252985/TV')
+]).then(data=>{
+    let products = data;
+    console.log('Promise.all',products);
+});
+
+```
+
+代码示例：`Promise4.html`：[点击查看源码](./demo/Promise4.html)
 
 
 # 辅助资料
