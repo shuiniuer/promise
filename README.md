@@ -32,7 +32,7 @@ p.then(function (result) {
 });
 ```
 
-重点关注：
+需要关注的点：
 
 #### 1.1 传入构造函数的executor函数
 在声明一个Promise对象实例时，需要向【Promise构造函数】中传入一个匿名函数来声明异步操作，我们把该函数叫做executor，executor传入构造函数后会立即执行。
