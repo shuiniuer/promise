@@ -36,7 +36,7 @@ p.then(function (result) {
 
 - Promise对象拥有一个未完成，但预计将来会完成的【异步操作】
 - Promise对象用then方法声明【异步操作完成后】的后续操作
-- Promise对象相当于一个容器，该容器用于存储【异步操作】的结果
+- Promise对象相包含一个容器，该容器用于存储【异步操作】的结果
 
 异步操作有以下三种状态：
 
@@ -123,10 +123,18 @@ p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val)=>{
 ### 1. then不支持链式调用
 
 #### 关键点：
-1. Promise接受一个executor函数，executor函数声明**异步操作**，用resolve声明**异步操作成功的“时刻”**，用reject声明**异步操作失败的“时刻”**
-2. Promise实例的then函数用来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**，then函数可以被多次调用
-3. resolve和onFulfilled对应，二者使用**自己的入参**和**Promise对象（容器）的一个属性**共享一个值（result）
-4. reject和onRejected对应，二者使用**自己的入参**和**Promise对象（容器）的一个属性**共享一个值（reason）
+1. Promise构造函数接受一个executor函数，executor函数声明**异步操作**并接受resolve和reject两个参数，用resolve触发**异步操作成功的后续操作**，用reject触发**异步操作失败的后续操作**
+2. 异步操作三种状态：
+
+> - pending：初始值
+> - fulfilled：代表操作成功
+> - rejected：代表操作失败
+> - 异步操作状态改变的方式有两种：
+> - 从pending转变为fulfilled
+> - 从pending转变为rejected
+
+3. Promise实例的then函数用来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**，then函数可以被多次调用
+4. resolve和onFulfilled对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（result）；reject和onRejected对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（reason）
 
 ```
 const PENDING = 'PENDING';
