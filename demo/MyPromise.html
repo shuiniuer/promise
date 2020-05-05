@@ -26,7 +26,7 @@
 
 <body>
     <div>
-        <h2>手动实现Promise</h2>
+        <h2>Promise简单实现</h2>
         <ul>
             <li>第1步：通过接口 <a
                     href="http://rap2.taobao.org:38080/app/mock/252985/userInfo">http://rap2.taobao.org:38080/app/mock/252985/userInfo</a>
@@ -39,77 +39,98 @@
 </body>
 <script>
     const PENDING = 'PENDING';
-    const RESOLVED = 'RESOLVED';
-    const REJECTED = 'REJECTED';
-    const resolvePromise = (x, resolve, reject) => {
-        if (!x) {
-            resolve(x);
+const RESOLVED = 'RESOLVED';
+const REJECTED = 'REJECTED';
+const resolvePromise = (x, resolve, reject) => {
+    if (!x) {
+        resolve(x);
+    } else {
+        // 如果x有then函数
+        // 说明x是一个Promise
+        // 调用一次x的then函数
+        let then = x.then;
+        if (typeof then === 'function') {
+            then.call(x, y => {
+                resolve(y);
+            }, r => {
+                reject(r);
+            })
         } else {
-            let then = x.then;
-            if (typeof then === 'function') {
-                then.call(x, y => {
-                    resolve(y);
-                }, r => {
-                    reject(r);
-                })
-            } else {
-                resolve(x);
-            }
+            resolve(x);
         }
     }
+}
 
-    class MyPromise {
-        constructor(executor) {
-            this.status = PENDING;
-            this.value = undefined;
-            this.reason = undefined;
+class MyPromise {
+    constructor(executor) {
+        this.status = PENDING;
+        this.result = undefined;
+        this.reason = undefined;
 
-            this.onFulfilledCallbacks = [];
-            this.onRejectedCallbacks = [];
+        this.onFulfilledCallbacks = [];
+        this.onRejectedCallbacks = [];
 
-            const resolve = (val) => {
-                if (this.status === PENDING) {
-                    this.status = RESOLVED;
-                    this.value = val;
-                    this.onFulfilledCallbacks.forEach(fn => fn());
-                }
+        const resolve = (result) => {
+            if (this.status === PENDING) {
+                this.status = RESOLVED;
+                this.result = result;
+                this.onFulfilledCallbacks.forEach(fn => fn());
             }
-            const reject = (reason) => {
-                if (this.status === PENDING) {
-                    this.status = REJECTED;
-                    this.reason = reason;
-                    this.onRejectedCallbacks.forEach(fn => fn());
-                }
-            }
-            executor(resolve, reject);
         }
+        const reject = (reason) => {
+            if (this.status === PENDING) {
+                this.status = REJECTED;
+                this.reason = reason;
+                this.onRejectedCallbacks.forEach(fn => fn());
+            }
+        }
+        executor(resolve, reject);
+    }
 
-        then(onFulfilled, onRejected) {
-            let promise2 = new MyPromise((resolve, reject) => {
-                if (this.status === RESOLVED) {
-                    let x = onFulfilled(this.value);
+    then(onFulfilled, onRejected) {
+
+        // 每次调用then函数则新创建一个Promise
+        // 并作为返回值返回
+        let promise2 = new MyPromise((resolve, reject) => {
+            if (this.status === RESOLVED) {
+                // 拿到onFulfilled的返回值x
+                let x = onFulfilled(this.value);
+
+                // 用promise2的resolve/reject处理x
+                resolvePromise(x, resolve, reject);
+            }
+
+            if (this.status === REJECTED) {
+                // 拿到onRejected的返回值x
+                let x = onRejected(this.reason);
+
+                // 用promise2的resolve/reject处理x
+                resolvePromise(x, resolve, reject);
+            }
+
+            if (this.status === PENDING) {
+            	   // 用匿名函数包裹一下onFulfilled
+                // 形成了一个闭包 
+                // 就可以通过闭包拿到promise2的resolve和reject方法
+                this.onFulfilledCallbacks.push(() => {
+                    // 拿到onFulfilled的返回值x
+                    let x = onFulfilled(this.result);
+
+                    // 用promise2的resolve/reject处理x
                     resolvePromise(x, resolve, reject);
-                }
-
-                if (this.status === REJECTED) {
+                });
+                this.onRejectedCallbacks.push(() => {
+                    // 拿到onRejected的返回值x
                     let x = onRejected(this.reason);
-                    resolvePromise(x, resolve, reject);
-                }
 
-                if (this.status === PENDING) {
-                    this.onFulfilledCallbacks.push(() => {
-                        let x = onFulfilled(this.value);
-                        resolvePromise(x, resolve, reject);
-                    });
-                    this.onRejectedCallbacks.push(() => {
-                        let x = onRejected(this.reason);
-                        resolvePromise(x, resolve, reject);
-                    });
-                }
-            });
-            return promise2;
-        }
-    };
+                    // 用promise2的resolve/reject处理x
+                    resolvePromise(x, resolve, reject);
+                });
+            }
+        });
+        return promise2;
+    }
+};
 
     let p_ajax = function (url) {
         let p = new MyPromise((resolve, reject) => {
