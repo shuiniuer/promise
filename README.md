@@ -3,7 +3,7 @@
 ## Promise基础
 Promise是js异步编程的一种解决方案，它是由社区最早提出和实现；ES6将其写进了语言标准，并提供了原生的Promise对象。
 
-在Promise之前，在js中的异步编程一般采用**【回调函数】**的方式来处理，但是这种编程方式在处理复杂业务的情况下，很容易出现callback hell（回调嵌套地狱）问题，使代码变得很难维护。
+在Promise之前，在js中的异步编程一般采用【回调函数】的方式来处理，但是这种编程方式在处理复杂业务的情况下，很容易出现callback hell（回调嵌套地狱）问题，使代码变得很难维护。
 
 例如我们常用的Ajax的回调，如果下一个Ajax请求要用到上一个Ajax请求的返回结果，就会出现上述问题。
 
@@ -49,7 +49,7 @@ p.then(function (result) {
 > - 从pending转变为fulfilled
 > - 从pending转变为rejected
 
-当状态发生变化时，通过then函数声明的**【后续操作函数】**就会被调用。
+当状态发生变化时，通过then函数声明的【后续操作函数】就会被调用。
 状态一旦改变就【凝固】了，会一直保持这个状态，不会再发生变化。
 
 代码示例：`Promise1.html`：[点击查看源码](./demo/Promise1.html)
@@ -57,16 +57,16 @@ p.then(function (result) {
 需要关注的点：
 
 #### 1.1 传入构造函数的executor函数
-在声明一个Promise对象实例时，需要向**【Promise构造函数】**中传入一个匿名函数，我们把该函数叫做executor，executor传入构造函数后会立即执行。
+在声明一个Promise对象实例时，需要向【Promise构造函数】中传入一个匿名函数，我们把该函数叫做executor，executor传入构造函数后会立即执行。
 
 executor接受`resolve函数`和`reject函数`两个参数：
 
-- 调用`resolve函数`用于**【触发】**完成态之后的操作，`resolve函数`在调用时接受一个`result`入参
-- 调用`reject函数`用于**【触发】**失败态之后的操作，`reject函数`在调用时接受一个`reason`入参
+- 调用`resolve函数`用于【触发】完成态之后的操作，`resolve函数`在调用时接受一个`result`入参
+- 调用`reject函数`用于【触发】失败态之后的操作，`reject函数`在调用时接受一个`reason`入参
 
 #### 1.2 Promise实例的then函数
 
-- 在实例化一个Promise对象之后，我们调用该对象实例的then函数来**【定义Promise异步操作完成后】的后续操作**，即：**resolve和reject被调用后的操作**。
+- 在实例化一个Promise对象之后，我们调用该对象实例的then函数来【定义Promise异步操作完成后】的后续操作，即：**resolve和reject被调用后的操作**。
 then函数接受两个函数作为入参：
 
 > 第一个入参对应着**resolve被调用**后的后续操作（Promise状态由从pending转变为fulfilled），我们把该函数叫做onFulfilled；onFulfilled接受一个入参，入参的值为调用resolve函数时传入的值。
