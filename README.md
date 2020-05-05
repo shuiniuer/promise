@@ -277,7 +277,7 @@ class MyPromise {
             }
 
             if (this.status === PENDING) {
-            	   // 用匿名函数包裹一下onFulfilled
+            	// 用匿名函数包裹一下onFulfilled
                 // 形成了一个闭包 
                 // 就可以通过闭包拿到promise2的resolve和reject方法
                 this.onFulfilledCallbacks.push(() => {
