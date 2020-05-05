@@ -129,9 +129,10 @@ p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val)=>{
 > - pending：初始值
 > - fulfilled：代表操作成功
 > - rejected：代表操作失败
-> - 异步操作状态改变的方式有两种：
-> - 从pending转变为fulfilled
-> - 从pending转变为rejected
+>
+> 异步操作状态改变的方式有两种：
+>> - 从pending转变为fulfilled
+>> - 从pending转变为rejected
 
 3. Promise实例的then函数用来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**，then函数可以被多次调用
 4. resolve和onFulfilled对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（result）；reject和onRejected对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（reason）
