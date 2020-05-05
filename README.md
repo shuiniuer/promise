@@ -72,17 +72,31 @@ then函数接受两个函数作为入参：
 
 - Promise对象的then函数可以被多次调用，每次调用都使用的是【凝固】后的状态。
 
-代码示例：`Promise1.html`：[点击查看源码](./demo/Promise1.html)
-
 ### 关键总结：
 1. executor声明**异步操作**，用resolve声明**异步操作成功的“时刻”**，用reject声明**异步操作失败的“时刻”**
-2. 调用Promise实例的then函数来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**
+2. Promise实例的then函数用来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**
 3. resolve和onFulfilled对应，二者使用**自己的入参**和**Promise对象（容器）的一个属性**共享一个值（result）
 4. reject和onRejected对应，二者使用**自己的入参**和**Promise对象（容器）的一个属性**共享一个值（reason）
 
+代码示例：`Promise1.html`：[点击查看源码](./demo/Promise1.html)
+
 ### 1.3 then函数的链式调用
 
+现象：
+
+1. Promise的then函数支持链式调用：`promise.then(onFulfilled1,onRejected1).then(onFulfilled2,onRejected2)`
+2. 如果onFulfilled1返回一个普通值x，则onFulfilled2的入参则是这个普通值x
+3. 如果onFulfilled1返回一个Promise，则onFulfilled2的入参则是这个Promise对应的 resolve 的值
+
 代码示例：`Promise2.html`：[点击查看源码](./demo/Promise2.html)
+
+原理：
+
+1. then函数的返回值是**一个新的Promise对象（我们称之为promise2）**，因此then函数支持链式调用
+2. **promise2（新的Promise对象）的executor**用来处理then函数的入参**onFulfilled和onRejected**
+
+> - 如果如果onFulfilled和onRejected的返回值是普通值，则用**promise2的resolve**直接返回
+> - 如果onFulfilled和onRejected的返回值仍然是一个Promise，则用**promise2的resolve**来返回**新返回的Promise**的then中**onFulfilled和onRejected的入参**
 
 ## 2. 用Promise包装ajax
 
