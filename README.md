@@ -106,23 +106,23 @@ p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val)=>{
 #### 关键点：
 1. Promise构造函数接受一个executor函数，executor函数声明**异步操作**并接受resolve和reject两个入参：
 
-> - resolve用于触发**异步操作成功的后续操作**
-> - reject用于触发**异步操作失败的后续操作**
+> - 在executor中调用resolve来触发**异步操作成功的后续操作**
+> - 在executor中调用reject来触发**异步操作失败的后续操作**
 
-2. Promise的异步操作三种状态：
+2. Promise的异步操作有三种状态：
 
 > - pending：初始值
 > - fulfilled：代表操作成功
 > - rejected：代表操作失败
 >
-> 异步操作状态改变的方式有两种：
->> - 从pending转变为fulfilled
->> - 从pending转变为rejected
+3. Promise的异步操作的状态改变的方式有且只有两种情况：
+> - 从pending转变为fulfilled
+> - 从pending转变为rejected
 
-3. Promise实例的then函数用来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**
-4. then函数可以被多次调用，即可以声明多个onFulfilled和onRejected
-5. resolve和onFulfilled对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（result）
-6. reject和onRejected对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（reason）
+4. Promise实例的then函数用来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**
+5. then函数可以被多次调用，即可以声明多个onFulfilled和onRejected
+6. resolve和onFulfilled对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（result）
+7. reject和onRejected对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（reason）
 
 ```
 const PENDING = 'PENDING';
