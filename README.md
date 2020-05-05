@@ -57,12 +57,12 @@ p.then(function (result) {
 需要关注的点：
 
 #### 1.1 传入构造函数的executor函数
-在声明一个Promise对象实例时，需要向【Promise构造函数】中传入一个匿名函数，我们把该函数叫做executor，executor传入构造函数后会立即执行。
+在声明一个Promise对象实例时，需要向【Promise构造函数】中传入一个匿名函数来声明异步操作，我们把该函数叫做executor，executor传入构造函数后会立即执行。
 
-executor接受`resolve函数`和`reject函数`两个参数：
+executor有`resolve函数`和`reject函数`两个入参：
 
-- 调用`resolve函数`用于【触发】完成态之后的操作，`resolve函数`在调用时接受一个`result`入参
-- 调用`reject函数`用于【触发】失败态之后的操作，`reject函数`在调用时接受一个`reason`入参
+- 异步操作完成后调用`resolve函数`【触发】成功态之后的操作，同时接受一个`result`入参
+- 异步操作完成后调用`reject函数`【触发】失败态之后的操作，同时接受一个`reason`入参
 
 #### 1.2 Promise实例的then函数
 
