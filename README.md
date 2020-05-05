@@ -1,13 +1,14 @@
-# Promise基础
-Promise 是异步编程的一种解决方案，比传统的解决方案（回调函数和事件）更合理和更强大。它由社区最早提出和实现，ES6将其写进了语言标准，统一了用法，并提供了原生的Promise。
+# Promise的实现
+## Promise基础
+Promise是js异步编程的一种解决方案，它是由社区最早提出和实现，ES6将其写进了语言标准，并提供了原生的Promise对象。
 
-在Promise之前，在js中的异步编程都是采用回调函数和事件的方式，但是这种编程方式在处理复杂业务的情况下，很容易出现callback hell（回调地狱），使得代码很难被理解和维护。
+在Promise之前，在js中的异步编程一般采用**回调函数**的方式来处理，但是这种编程方式在处理复杂业务的情况下，很容易出现callback hell（回调嵌套地狱）问题，使得代码很难被理解和维护。
 
-例如Ajax的回调问题，如果下一个ajax请求要用到上一个Ajax请求中的结果，那么就会导致多个回调嵌套的问题。
+例如：Ajax的回调，如果下一个ajax请求要用到上一个Ajax请求中的结果，那么就会导致多个回调嵌套的问题。
 
 代码示例`ajax.html`：[点击查看源码](./demo/ajax.html)
 
-## 1. 理解Promise
+### 1. 理解Promise
 
 - Promise对象相当于一个容器，里面用于存储一个异步操作的结果
 - Promise对象拥有一个未完成，但预计将来会完成的操作
@@ -53,7 +54,7 @@ p.then(function (result) {
 
 需要关注的点：
 
-### 1.1 传入构造函数的executor函数
+#### 1.1 传入构造函数的executor函数
 在声明一个Promise对象实例时，需要向**Promise构造函数**中传入一个匿名函数，我们把该函数叫做executor，executor传入构造函数后会立即执行。
 
 executor接受`resolve函数`和`reject函数`两个参数：
@@ -61,7 +62,7 @@ executor接受`resolve函数`和`reject函数`两个参数：
 - 调用`resolve函数`用于**触发**完成态之后的操作，`resolve函数`在调用时接受一个`result`入参
 - 调用`reject函数`用于**触发**失败态之后的操作，`reject函数`在调用时接受一个`reason`入参
 
-### 1.2 Promise实例的then函数
+#### 1.2 Promise实例的then函数
 
 - 在实例化一个Promise对象之后，我们调用该对象实例的then函数来**定义Promise异步操作完成后的操作**，即：**resolve和reject被调用后的操作**。
 then函数接受两个函数作为入参：
@@ -74,13 +75,13 @@ then函数接受两个函数作为入参：
 
 代码示例：`Promise1.html`：[点击查看源码](./demo/Promise1.html)
 
-### 关键总结：
+#### 关键总结：
 1. executor声明**异步操作**，用resolve声明**异步操作成功的“时刻”**，用reject声明**异步操作失败的“时刻”**
 2. Promise实例的then函数用来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**
 3. resolve和onFulfilled对应，二者使用**自己的入参**和**Promise对象（容器）的一个属性**共享一个值（result）
 4. reject和onRejected对应，二者使用**自己的入参**和**Promise对象（容器）的一个属性**共享一个值（reason）
 
-### 1.3 then函数的链式调用
+#### 1.3 then函数的链式调用
 
 - Promise的then函数支持链式调用：`promise.then(onFulfilled1,onRejected1).then(onFulfilled2,onRejected2)`
 - 如果onFulfilled1返回一个普通值x，则onFulfilled2的入参则是这个普通值x
@@ -88,7 +89,7 @@ then函数接受两个函数作为入参：
 
 代码示例：`Promise2.html`：[点击查看源码](./demo/Promise2.html)
 
-## 2. 用Promise包装ajax
+### 2. 用Promise包装ajax
 
 用Promise包装一下ajax实现更优雅的异步调用：
 
@@ -123,9 +124,9 @@ p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val)=>{
 
 代码示例：`Promise3.html`：[点击查看源码](./demo/Promise3.html)
 
-# Promise简单实现
+## Promise简单实现
 
-## 1. then不支持链式调用
+### 1. then不支持链式调用
 
 ```
 const PENDING = 'PENDING';
@@ -198,9 +199,9 @@ class MyPromise {
 };
 ```
 
-## 2. then支持链式调用
+### 2. then支持链式调用
 
-### 原理：
+#### 原理：
 
 1. then函数的返回值是**一个新的Promise对象（我们称之为promise2）**，因此then函数支持链式调用
 2. **promise2（新的Promise对象）的executor**用来处理**前一个Promise的then函数**的入参**onFulfilled和onRejected**
@@ -304,7 +305,7 @@ class MyPromise {
 代码示例：`MyPromise.html`：[点击查看源码](./demo/MyPromise.html)
 
 
-# Promise其他方法：Promise.race、Promise.all等
+## Promise其他方法：Promise.race、Promise.all等
 
 ```
 // 请求3个接口，只要有一个接口返回数据，就进行下一步操作
@@ -332,7 +333,7 @@ Promise.all([
 代码示例：`Promise4.html`：[点击查看源码](./demo/Promise4.html)
 
 
-# 辅助资料
+## 辅助资料
 
 - 课程中需要用到的数据接口：
 
