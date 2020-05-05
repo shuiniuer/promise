@@ -1,6 +1,57 @@
-# Promise的实现
+# 《Promise的原理和实现》
+
+## 课程辅助
+
+- 课程中需要用到的数据接口：
+
+```
+// 用户信息
+http://rap2.taobao.org:38080/app/mock/252985/userInfo
+
+// 用户账单
+http://rap2.taobao.org:38080/app/mock/252985/bill?userId=1
+
+// 手机
+http://rap2.taobao.org:38080/app/mock/252985/mobilephone
+
+// 电脑
+http://rap2.taobao.org:38080/app/mock/252985/computer
+
+// 电视机
+http://rap2.taobao.org:38080/app/mock/252985/TV
+
+```
+
+- 封装一个简单的ajax方法
+
+```
+/**
+ * ajax方法接受一个obj对象
+ * obj = {
+ *  url:'', //请求接口地址
+ *  success(data){}, //成功回掉
+ *  fail(err){} //失败回掉
+ * } 
+ */
+function ajax(obj) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('get', obj.url, true);
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            let data = (JSON.parse(xhr.responseText));
+            if(data.isOk === false){
+                obj.fail ? obj.fail(data): null;
+            }else{
+                obj.success(data);
+            }
+        }
+    }
+}
+```
+
 ## Promise基础
-Promise是js异步编程的一种解决方案，它是由社区最早提出和实现，ES6将其写进了语言标准，并提供了原生的Promise对象。
+Promise是js异步编程的一种解决方案，它是由社区最早提出和实现；ES6将其写进了语言标准，并提供了原生的Promise对象。
 
 在Promise之前，在js中的异步编程一般采用**回调函数**的方式来处理，但是这种编程方式在处理复杂业务的情况下，很容易出现callback hell（回调嵌套地狱）问题，使得代码很难被理解和维护。
 
@@ -331,54 +382,3 @@ Promise.all([
 ```
 
 代码示例：`Promise4.html`：[点击查看源码](./demo/Promise4.html)
-
-
-## 辅助资料
-
-- 课程中需要用到的数据接口：
-
-```
-// 用户信息
-http://rap2.taobao.org:38080/app/mock/252985/userInfo
-
-// 用户账单
-http://rap2.taobao.org:38080/app/mock/252985/bill?userId=1
-
-// 手机
-http://rap2.taobao.org:38080/app/mock/252985/mobilephone
-
-// 电脑
-http://rap2.taobao.org:38080/app/mock/252985/computer
-
-// 电视机
-http://rap2.taobao.org:38080/app/mock/252985/TV
-
-```
-
-- 封装一个简单的ajax方法
-
-```
-/**
- * ajax方法接受一个obj对象
- * obj = {
- *  url:'', //请求接口地址
- *  success(data){}, //成功回掉
- *  fail(err){} //失败回掉
- * } 
- */
-function ajax(obj) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('get', obj.url, true);
-    xhr.send();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            let data = (JSON.parse(xhr.responseText));
-            if(data.isOk === false){
-                obj.fail ? obj.fail(data): null;
-            }else{
-                obj.success(data);
-            }
-        }
-    }
-}
-```
