@@ -79,7 +79,7 @@ then函数接受两个函数作为入参：
 
 - Promise的then函数支持链式调用：`promise.then(onFulfilled1,onRejected1).then(onFulfilled2,onRejected2)`
 - 如果onFulfilled1返回一个普通值x，则onFulfilled2的入参则是这个普通值x
-- 如果onFulfilled1返回一个Promise，则onFulfilled2的入参则是这个Promise对应的 resolve 的值
+- 如果onFulfilled1返回一个Promise，则onFulfilled2的入参则是这个Promise对应的 resolve 的入参
 
 代码示例：`Promise2.html`：[点击查看源码](./demo/Promise2.html)
 
