@@ -7,7 +7,7 @@ Promise是js异步编程的一种解决方案，它是由社区最早提出和�
 
 例如我们常用的Ajax的回调，如果下一个Ajax请求要用到上一个Ajax请求的返回结果，就会出现上述问题。
 
-代码示例：`ajax.html`：[点击查看源码](./demo/ajax.html)
+代码示例`ajax.html`：[点击查看源码](./demo/ajax.html)
 
 ### 1. Promise的使用语法
 
@@ -54,7 +54,7 @@ then函数接受两个函数作为入参：
 - Promise对象的then函数可以被多次调用
 
 
-代码示例：`Promise1.html`：[点击查看源码](./demo/Promise1.html)
+代码示例`Promise1.html`：[点击查看源码](./demo/Promise1.html)
 
 #### 1.3 then函数的链式调用
 
@@ -62,7 +62,7 @@ then函数接受两个函数作为入参：
 - 如果onFulfilled1返回一个普通值x，则onFulfilled2的入参则是这个普通值x
 - 如果onFulfilled1返回一个Promise，则onFulfilled2的入参则是这个Promise对应的 resolve 的入参
 
-代码示例：`Promise2.html`：[点击查看源码](./demo/Promise2.html)
+代码示例`Promise2.html`：[点击查看源码](./demo/Promise2.html)
 
 ### 2. 用Promise包装ajax
 
@@ -97,7 +97,7 @@ p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val)=>{
 
 ```
 
-代码示例：`Promise3.html`：[点击查看源码](./demo/Promise3.html)
+代码示例`Promise3.html`：[点击查看源码](./demo/Promise3.html)
 
 ## Promise简单实现
 
@@ -297,7 +297,7 @@ class MyPromise {
 };
 ```
 
-代码示例：`MyPromise.html`：[点击查看源码](./demo/MyPromise.html)
+代码示例`MyPromise.html`：[点击查看源码](./demo/MyPromise.html)
 
 
 ## Promise其他方法：Promise.race、Promise.all等
@@ -325,7 +325,7 @@ Promise.all([
 
 ```
 
-代码示例：`Promise4.html`：[点击查看源码](./demo/Promise4.html)
+代码示例`Promise4.html`：[点击查看源码](./demo/Promise4.html)
 
 ## 辅助资料
 
