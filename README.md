@@ -25,6 +25,8 @@ p.then(function (result) {
 });
 ```
 
+代码示例`Promise1.html`：[点击查看源码](./demo/Promise1.html)
+
 需要关注的点：
 
 #### 1.1 传入构造函数的executor函数
@@ -46,8 +48,6 @@ then函数接受两个函数作为入参：
 
 - Promise对象的then函数可以被多次调用
 
-
-代码示例`Promise1.html`：[点击查看源码](./demo/Promise1.html)
 
 #### 1.3 then函数的链式调用
 
