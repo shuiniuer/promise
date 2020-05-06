@@ -8,19 +8,17 @@ Promise是js异步编程的一种解决方案，最早由js社区提出和实现
 var p = new Promise(function (resolve, reject) {
     // ...
     if(/* 异步操作成功 */){
-    	// 触发【异步操作成功时】的后续操作
        resolve(result); //result为异步操作成功拿到的结果
     } else {
-    	// 触发【异步操作失败时】的后续操作
        reject(reason); //reason为异步操作失败拿到的结果
     }
 });
 
 p.then(function (result) {
-    // 声明【异步操作成功后】的操作
+    // 声明【异步操作成功】的后续操作
     // ...
 }, function (reason) {
-    // 声明【异步操作失败后】的操作
+    // 声明【异步操作失败】的后续操作
     // ...
 });
 ```
@@ -32,8 +30,8 @@ p.then(function (result) {
 
 executor有`resolve`和`reject`两个入参：
 
-- `resolve`用于【触发异步操作成功时】的后续操作，`resolve`调用时传入`result`参数
-- `reject`用于【触发异步操作失败时】的后续操作，`reject`调用时传入`reason`参数
+- `resolve`用于【触发】【异步操作成功】的后续操作，`resolve`调用时传入`result`参数
+- `reject`用于【触发】【异步操作失败】的后续操作，`reject`调用时传入`reason`参数
 
 #### 1.2 Promise实例的then函数
 
@@ -41,9 +39,9 @@ executor有`resolve`和`reject`两个入参：
 
 then函数接受两个匿名函数作为入参：
 
-> 第一个匿名函数我们称之为onFulfilled，【声明异步操作成功后】的操作；onFulfilled接受一个入参result，和resolve的入参result对应
+> 第一个匿名函数我们称之为onFulfilled，【声明】【异步操作成功的后续操作】；onFulfilled接受一个入参result，和resolve的入参result对应
 >
-> 第二个匿名函数我们称之为onRejected，【声明异步操作失败后】的操作；onRejected接受一个入参reason，和reject的入参reason对应
+> 第二个匿名函数我们称之为onRejected，【声明】【异步操作失败的后续操作】；onRejected接受一个入参reason，和reject的入参reason对应
 
 - Promise对象的then函数可以被多次调用
 
