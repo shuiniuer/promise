@@ -32,8 +32,8 @@ p.then(function (result) {
 
 executor有`resolve函数`和`reject函数`两个入参：
 
-- 异步操作完成后调用`resolve函数`【触发】成功态之后的操作，同时接受一个`result`入参
-- 异步操作完成后调用`reject函数`【触发】失败态之后的操作，同时接受一个`reason`入参
+- `resolve函数`用于【触发】异步操作成功之后的操作，同时接受一个`result`入参
+- `reject函数`用于【触发】异步操作失败之后的操作，同时接受一个`reason`入参
 
 #### 1.2 Promise实例的then函数
 
