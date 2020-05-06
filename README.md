@@ -32,18 +32,18 @@ p.then(function (result) {
 
 executor有`resolve`和`reject`两个入参：
 
-- `resolve`用于【触发】异步操作成功时的后续操作，`resolve`调用时传入`result`参数
-- `reject`用于【触发】异步操作失败时的后续操作，`reject`调用时传入`reason`参数
+- `resolve`用于【触发异步操作成功时】的后续操作，`resolve`调用时传入`result`参数
+- `reject`用于【触发异步操作失败时】的后续操作，`reject`调用时传入`reason`参数
 
 #### 1.2 Promise实例的then函数
 
-- 在实例化一个Promise对象之后，我们调用该对象实例的then函数来【定义Promise异步操作成功或失败时】的后续操作，即：**resolve和reject被调用后的操作**
+- 在实例化一个Promise对象之后，我们调用该对象实例的then函数来【声明异步操作成功或失败】后的续操作。
 
 then函数接受两个匿名函数作为入参：
 
-> 第一个匿名函数我们称之为onFulfilled，对应着**resolve被调用**后的后续操作（Promise状态由从pending转变为fulfilled）；onFulfilled接受一个入参，入参的值为调用resolve时传入的result
+> 第一个匿名函数我们称之为onFulfilled，【声明异步操作成功后】的操作；onFulfilled接受一个入参result，和resolve的入参result对应
 >
-> 第二个匿名函数我们称之为onRejected，对应着**reject被调用**后的后续操作（Promise状态由从pending转变为rejected）；onRejected接受一个入参，入参的值为调用reject时传入的reason
+> 第二个匿名函数我们称之为onRejected，【声明异步操作失败后】的操作；onRejected接受一个入参reason，和reject的入参reason对应
 
 - Promise对象的then函数可以被多次调用
 
