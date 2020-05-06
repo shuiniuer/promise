@@ -38,11 +38,12 @@ executor有`resolve函数`和`reject函数`两个入参：
 #### 1.2 Promise实例的then函数
 
 - 在实例化一个Promise对象之后，我们调用该对象实例的then函数来【定义Promise异步操作完成后】的后续操作，即：**resolve和reject被调用后的操作**
-then函数接受两个函数作为入参：
 
-> 第一个入参我们称之为onFulfilled，对应着**resolve被调用**后的后续操作（Promise状态由从pending转变为fulfilled）；onFulfilled接受一个入参，入参的值为调用resolve时传入的值
+then函数接受两个匿名函数作为入参：
+
+> 第一个匿名函数我们称之为onFulfilled，对应着**resolve被调用**后的后续操作（Promise状态由从pending转变为fulfilled）；onFulfilled接受一个入参，入参的值为调用resolve时传入的值
 >
-> 第二个入参我们称之为onRejected，对应着**reject被调用**后的后续操作（Promise状态由从pending转变为rejected）；onRejected接受一个入参，入参的值为调用reject时传入的值
+> 第二个匿名函数我们称之为onRejected，对应着**reject被调用**后的后续操作（Promise状态由从pending转变为rejected）；onRejected接受一个入参，入参的值为调用reject时传入的值
 
 - Promise对象的then函数可以被多次调用
 
