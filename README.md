@@ -1,5 +1,5 @@
 # 《Promise的原理和实现》
-Promise是js异步编程的一种解决方案，最早由js社区提出和实现，后来ES6将其写进了js语言标准，统一了用法。
+Promise是js异步编程的一种解决方案，最早由js社区提出和实现，后来ES6将其写进了js语言标准，并提供了原生的Promise类。
 
 ## Promise使用
 ### 1. Promise的使用语法
