@@ -30,10 +30,10 @@ p.then(function (result) {
 #### 1.1 传入构造函数的executor函数
 在声明一个Promise对象实例时，需要向【Promise构造函数】中传入一个匿名函数来声明异步操作，我们把该函数叫做executor，executor传入构造函数后会立即执行。
 
-executor有`resolve函数`和`reject函数`两个入参：
+executor有`resolve`和`reject`两个入参：
 
-- `resolve函数`用于【触发】异步操作成功之后的操作，同时接受一个`result`入参
-- `reject函数`用于【触发】异步操作失败之后的操作，同时接受一个`reason`入参
+- `resolve`用于【触发】异步操作成功之后的操作，`resolve`调用时传入`result`参数
+- `reject`用于【触发】异步操作失败之后的操作，`reject`调用时传入`reason`参数
 
 #### 1.2 Promise实例的then函数
 
@@ -41,9 +41,9 @@ executor有`resolve函数`和`reject函数`两个入参：
 
 then函数接受两个匿名函数作为入参：
 
-> 第一个匿名函数我们称之为onFulfilled，对应着**resolve被调用**后的后续操作（Promise状态由从pending转变为fulfilled）；onFulfilled接受一个入参，入参的值为调用resolve时传入的值
+> 第一个匿名函数我们称之为onFulfilled，对应着**resolve被调用**后的后续操作（Promise状态由从pending转变为fulfilled）；onFulfilled接受一个入参，入参的值为调用resolve时传入的result
 >
-> 第二个匿名函数我们称之为onRejected，对应着**reject被调用**后的后续操作（Promise状态由从pending转变为rejected）；onRejected接受一个入参，入参的值为调用reject时传入的值
+> 第二个匿名函数我们称之为onRejected，对应着**reject被调用**后的后续操作（Promise状态由从pending转变为rejected）；onRejected接受一个入参，入参的值为调用reject时传入的reason
 
 - Promise对象的then函数可以被多次调用
 
