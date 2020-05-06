@@ -6,21 +6,21 @@ Promise是js异步编程的一种解决方案，最早由js社区提出和实现
 
 ```
 var p = new Promise(function (resolve, reject) {
-	// ...
+    // ...
     if(/* 异步操作成功 */){
-    	// 触发【异步操作成功后】的后续操作
+    	// 触发【异步操作成功时】的后续操作
        resolve(result); //result为异步操作成功拿到的结果
     } else {
-    	// 触发【异步操作失败后】的后续操作
+    	// 触发【异步操作失败时】的后续操作
        reject(reason); //reason为异步操作失败拿到的结果
     }
 });
 
 p.then(function (result) {
-    // 声明【异步操作成功后】的后续操作
+    // 声明【异步操作成功时】的后续操作
     // ...
 }, function (reason) {
-    // 声明【异步操作失败后】的后续操作
+    // 声明【异步操作失败时】的后续操作
     // ...
 });
 ```
@@ -32,12 +32,12 @@ p.then(function (result) {
 
 executor有`resolve`和`reject`两个入参：
 
-- `resolve`用于【触发】异步操作成功之后的操作，`resolve`调用时传入`result`参数
-- `reject`用于【触发】异步操作失败之后的操作，`reject`调用时传入`reason`参数
+- `resolve`用于【触发】异步操作成功时的后续操作，`resolve`调用时传入`result`参数
+- `reject`用于【触发】异步操作失败时的后续操作，`reject`调用时传入`reason`参数
 
 #### 1.2 Promise实例的then函数
 
-- 在实例化一个Promise对象之后，我们调用该对象实例的then函数来【定义Promise异步操作完成后】的后续操作，即：**resolve和reject被调用后的操作**
+- 在实例化一个Promise对象之后，我们调用该对象实例的then函数来【定义Promise异步操作成功或失败时】的后续操作，即：**resolve和reject被调用后的操作**
 
 then函数接受两个匿名函数作为入参：
 
