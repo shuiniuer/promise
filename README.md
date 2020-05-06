@@ -17,10 +17,10 @@ var p = new Promise(function (resolve, reject) {
 });
 
 p.then(function (result) {
-    // 声明【异步操作成功时】的后续操作
+    // 声明【异步操作成功后】的操作
     // ...
 }, function (reason) {
-    // 声明【异步操作失败时】的后续操作
+    // 声明【异步操作失败后】的操作
     // ...
 });
 ```
