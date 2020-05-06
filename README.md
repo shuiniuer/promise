@@ -2,11 +2,11 @@
 Promise是js异步编程的一种解决方案，最早由js社区提出和实现，后来ES6将其写进了js语言标准，并提供了原生的Promise类。
 
 ## Promise使用
-### 1. Promise的使用语法
+### 1. 声明Promise的语法
 
 ```
 var p = new Promise(function (resolve, reject) {
-	 // ...
+	// ...
     if(/* 异步操作成功 */){
     	// 触发【异步操作成功后】的后续操作
        resolve(result); //result为异步操作成功拿到的结果
