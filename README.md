@@ -191,8 +191,8 @@ class MyPromise {
 1. then函数的返回值是**一个新的Promise对象（我们称之为promise2）**，因此then函数支持链式调用
 2. **promise2（新的Promise对象）的executor**用来处理**前一个Promise的then**定义的**onFulfilled和onRejected**的返回值
 
-> - 如果如果onFulfilled和onRejected的返回值是普通值，则用**promise2的resolve**直接返回
-> - 如果onFulfilled和onRejected的返回值仍然是一个Promise，则用**promise2的resolve**来返回**当前返回的Promise**的then中的**onFulfilled和onRejected的入参**
+> - 如果onFulfilled和onRejected的返回值是普通值，则用**promise2的resolve**直接返回
+> - 如果onFulfilled和onRejected的返回值仍然是一个Promise，则用**promise2的resolve和reject**来返回**当前返回的Promise**的then中的**onFulfilled和onRejected的入参**
 
 ```
 const PENDING = 'PENDING';
