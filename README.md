@@ -207,7 +207,7 @@ const resolvePromise = (x, resolve, reject) => {
         // 调用一次x的then函数
         let then = x.then;
         if (typeof then === 'function') {
-            then.call(x, y => {
+            x.then(y => {
                 resolve(y);
             }, r => {
                 reject(r);
