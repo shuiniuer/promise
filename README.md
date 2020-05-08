@@ -188,7 +188,7 @@ class MyPromise {
 
 #### 关键点：
 
-1. then函数的返回值是**一个新的Promise对象（我们称之为promise2）**，因此then函数支持链式调用
+1. then函数的返回值是**一个新的Promise对象（我们称之为promise2）**，因此then函数支持链式调用：
 
 ```
 promise.then(onFulfilled1,onRejected1).then(onFulfilled2,onRejected2)
