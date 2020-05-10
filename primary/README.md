@@ -360,8 +360,6 @@ class MyPromise {
 };
 ```
 
-代码示例`MyPromise.html`：[点击查看源码](./MyPromise.html)
-
 ## Promise的类方法：Promise.race、Promise.all等
 
 ```
