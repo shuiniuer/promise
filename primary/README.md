@@ -5,6 +5,8 @@ Promise是javascript【异步编程】的一种解决方案。
 
 ### 1. 基础使用
 
+举例：买彩票
+
 ```
 var p = new Promise(
     // executor
@@ -57,6 +59,8 @@ p.then(
 ```
 
 ### 2. 链式调用
+
+举例：点外卖
 
 ```
 console.log('小明在餐厅点了一碗黄焖鸡外卖');
@@ -149,25 +153,27 @@ p_ajax('http://rap2.taobao.org:38080/app/mock/252985/userInfo').then((val)=>{
 #### 关键点：
 1. Promise构造函数接受一个executor函数，executor函数声明**异步操作**并接受resolve和reject两个入参：
 
-> - 在executor中调用resolve来触发**异步操作成功的后续操作**
-> - 在executor中调用reject来触发**异步操作失败的后续操作**
+> - 在executor中调用resolve来触发**异步操作返回【成功结果】之后的操作**
+> - 在executor中调用reject来触发**异步操作返回【失败结果】之后的操作**
 
-2. Promise的异步操作有三种状态：
+2. Promise内部维持三种状态：
 
 > - pending：初始值
 > - fulfilled：代表操作成功
 > - rejected：代表操作失败
 >
-3. Promise的异步操作的状态改变的方式有且只有两种情况：
+3. Promise状态改变的方式有且只有两种：
 > - 从pending转变为fulfilled
 > - 从pending转变为rejected
 >
 > 一旦状态发生改变，状态将不能再被改变
 
-4. Promise实例的then函数用来声明**异步操作完成后**的后续操作，用onFulfilled声明**异步操作成功后的操作**，用onRejected声明**异步操作失败后的操作**
-5. then函数可以被多次调用，即可以声明多个onFulfilled和onRejected
-6. resolve和onFulfilled对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（result）
-7. reject和onRejected对应，二者使用**自己的入参**和**Promise对象的一个属性**共享一个值（reason）
+4. Promise实例用then来声明**异步操作完成之后**的后续操作
+
+> - 用onFulfilled声明**异步操作返回【成功结果】之后的操作**
+> - 用onRejected声明**异步操作返回【失败结果】之后的操作**
+
+5. then方法可以被多次调用，即可以声明多个onFulfilled和onRejected
 
 ```
 const PENDING = 'PENDING';
@@ -226,10 +232,10 @@ class MyPromise {
 
         // 当异步操作未返回时（Promise对象状态为PENDING）
         if (this.status === PENDING) {
-            // 把每次调用then函数传入的onFulfilled存放到onFulfilledCallbacks中
+            // 把每次调用then方法传入的onFulfilled存放到onFulfilledCallbacks中
             this.onFulfilledCallbacks.push(onFulfilled);
             
-            // 把每次调用then函数传入的onRejected存放到onRejectedCallbacks中
+            // 把每次调用then方法传入的onRejected存放到onRejectedCallbacks中
             this.onRejectedCallbacks.push(onRejected);
         }
     }
@@ -240,16 +246,22 @@ class MyPromise {
 
 #### 关键点：
 
-1. then函数的返回值是**一个新的Promise对象（我们称之为promise2）**，因此then函数支持链式调用：
+1. then的返回值是**一个新的Promise对象（我们称之为promise2）**，因此then支持链式调用：
 
 ```
-promise.then(onFulfilled1,onRejected1).then(onFulfilled2,onRejected2)
+promise.then(onFulfilled1).then(onFulfilled2);
 ```
 
-2. **promise2（新的Promise对象）的executor**用来处理**前一个Promise的then**定义的**onFulfilled1和onRejected1**的返回值
+2. 用**promise2（新的Promise对象）**来处理**前一个Promise的then**定义的**onFulfilled1和onRejected1**的返回值
 
-> - 如果onFulfilled1和onRejected1的返回值是普通值，则用**promise2的resolve**直接返回
-> - 如果onFulfilled1和onRejected1的返回值仍然是一个Promise，则用**promise2的resolve和reject**来分别处理**onFulfilled1和onRejected1的入参**
+如果onFulfilled1和onRejected1的返回值是普通值（非Promise）：
+
+>- 用**promise2的resolve**直接【传回】该值
+
+如果onFulfilled1和onRejected1的返回值仍然是一个Promise：
+
+> - 用**promise2的resolve**来【传回】**onFulfilled1的入参**
+> - 用**promise2的reject**来【传回】**onRejected1的入参**
 
 ```
 const PENDING = 'PENDING';
@@ -259,9 +271,9 @@ const resolvePromise = (x, resolve, reject) => {
     if (!x) {
         resolve(x);
     } else {
-        // 如果x有then函数
+        // 如果x有then方法
         // 说明x是一个Promise
-        // 调用一次x的then函数
+        // 调用一次x的then方法
         let then = x.then;
         if (typeof then === 'function') {
             x.then(y => {
@@ -303,7 +315,7 @@ class MyPromise {
 
     then(onFulfilled, onRejected) {
 
-        // 每次调用then函数就会创建一个新的Promise
+        // 每次调用then方法就会创建一个新的Promise
         let promise2 = new MyPromise((resolve, reject) => {
             if (this.status === RESOLVED) {
                 // 拿到onFulfilled的返回值x
