@@ -1,4 +1,4 @@
-# 《Promise原理》
+# 《Promise学习》
 Promise是javascript【异步编程】的一种解决方案。
 
 ## Promise使用
