@@ -111,7 +111,7 @@ restaurant.then(
 
 ### 3. 用Promise封装ajax
 
-用Promise包装ajax：
+用Promise封装ajax：
 
 ```
 let p_ajax = function(url){
