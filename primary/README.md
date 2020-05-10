@@ -29,9 +29,9 @@ var p = new Promise(
 p.then(
     // onFulfilled
     // 用于定义成功后的操作
-    function (result)=> {
+    (result)=> {
         console.log(result);
-        console.log('迎娶白富美。。。');
+        console.log('炒老板鱿鱼。。。');
     },
     // onRejected
     // 用于定义失败后的操作

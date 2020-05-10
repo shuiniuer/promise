@@ -13,7 +13,38 @@
     </div>
 </body>
 <script>
+var p = new Promise(
+    // executor
+    // 用于定义异步操作
+    (resolve, reject)=> {
+        setTimeout(()=>{
+            // 用于传递成功的结果
+            resolve({
+                message: '中了一个亿'
+            });
 
+            // 用于传递失败的结果
+            // reject({
+            //    message: '未中奖'
+            // });
+        },2000);
+    }
+);
+
+p.then(
+    // onFulfilled
+    // 用于定义成功后的操作
+    (result)=> {
+        console.log(result);
+        console.log('迎娶白富美。。。');
+    },
+    // onRejected
+    // 用于定义失败后的操作
+    (reason)=> {
+        console.log(reason);
+        console.log('继续搬砖。。。');
+    }
+);
 </script>
 
 </html>
