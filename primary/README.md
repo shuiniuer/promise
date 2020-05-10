@@ -85,9 +85,7 @@ restaurant.then(
                 console.log('外卖员开始送餐');
                 setTimeout(()=>{
                     console.log('外卖员把餐送到，联系小明取餐');
-                    resolve({
-                        result: '一碗黄焖鸡'
-                    });
+                    resolve(result);
                 },2000);
             }
         );
