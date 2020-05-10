@@ -15,7 +15,7 @@ var p = new Promise(
         setTimeout(()=>{
             // 用于传递成功的结果
             resolve({
-                message: '中奖了'
+                message: '中了1000万'
             });
 
             // 用于传递失败的结果
