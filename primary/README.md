@@ -252,14 +252,14 @@ promise.then(onFulfilled1).then(onFulfilled2);
 
 2. 用**promise2（新的Promise对象）**来处理**前一个Promise的then**定义的**onFulfilled1和onRejected1**的返回值
 
-如果onFulfilled1和onRejected1的返回值是普通值（非Promise）：
+如果onFulfilled1和onRejected1的返回值是普通值（非Promise值）：
 
 >- 用**promise2的resolve**直接【传回】该值
 
-如果onFulfilled1和onRejected1的返回值仍然是一个Promise：
+如果onFulfilled1和onRejected1的返回值仍然是一个Promise（我们称之为x）：
 
-> - 用**promise2的resolve**来【传回】**onFulfilled1的入参**
-> - 用**promise2的reject**来【传回】**onRejected1的入参**
+> - 用**promise2的resolve**来【传回】**x.then的onFulfilled的入参**
+> - 用**promise2的reject**来【传回】**x.then的onRejected的入参**
 
 ```
 const PENDING = 'PENDING';
